@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ash Ledger</title>
+<meta name="description" content="Interactive driver-based calculator for the Phulla–Vedanta fly-ash JV financial model.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="titleblock">
+      <div class="eyebrow">Phulla &times; Vedanta &nbsp;/&nbsp; Fly Ash Valorisation, Jharsuguda</div>
+      <h1>Ash Ledger</h1>
+      <div class="sub">Driver-based 15-year model. Every figure on the right recalculates the instant you change a value on the left.</div>
+    </div>
+    <div class="scenario-switch">
+      <div class="lamp-row">
+        <span class="lamp neutral" id="lamp"></span>
+        <span class="lamp-label" id="lampLabel">Base case</span>
+      </div>
+      <div class="seg" id="scenarioSeg" role="tablist" aria-label="Scenario">
+        <button data-scenario="Base">Base</button>
+        <button data-scenario="Downside">Downside</button>
+        <button data-scenario="Severe">Severe</button>
+        <button data-scenario="Custom">Custom</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <div class="input-console" id="inputConsole"></div>
+
+    <div class="dashboard">
+      <div class="panel">
+        <div class="panel-head"><h3>15-Year Headline</h3><span class="tag" id="scenarioTag">BASE</span></div>
+        <div class="panel-body">
+          <div class="kpi-grid">
+            <div class="kpi accent"><div class="k-label">Revenue</div><div class="k-value" id="kpiRevenue">–</div><div class="k-note">15-yr cumulative, ₹ Cr</div></div>
+            <div class="kpi cost"><div class="k-label">Profit After Tax</div><div class="k-value" id="kpiPat">–</div><div class="k-note" id="kpiPatMargin">–</div></div>
+            <div class="kpi"><div class="k-label">Peak Funding Need</div><div class="k-value" id="kpiPeak">–</div><div class="k-note">max shareholder loan, ₹ Cr</div></div>
+            <div class="kpi"><div class="k-label">Breakeven</div><div class="k-value" id="kpiBreakeven">–</div><div class="k-note">loan fully repaid</div></div>
+            <div class="kpi wide"><div class="k-label">Profit Share (15-yr)</div>
+              <div class="k-note" style="font-size:12.5px;margin-top:2px;">
+                Vedanta <b class="mono" id="kpiVedanta">–</b> &nbsp;&middot;&nbsp; PCS (50% PAT + consulting) <b class="mono" id="kpiPcs">–</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h3>Revenue vs. Profit After Tax, by Year</h3><span class="tag">₹ Cr</span></div>
+        <div class="panel-body">
+          <div class="legend">
+            <span class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span>Revenue</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:var(--series-cost)"></span>Profit after tax</span>
+          </div>
+          <div class="chart-wrap" id="yearChartWrap"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h3>Funding &amp; Cash Position, 180 Months</h3><span class="tag">₹ Cr</span></div>
+        <div class="panel-body">
+          <div class="legend">
+            <span class="legend-item"><span class="legend-swatch" style="background:var(--status-critical)"></span>Shareholder loan outstanding</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span>Cash built up</span>
+          </div>
+          <div class="chart-wrap" id="cashChartWrap"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h3>Annual P&amp;L</h3><span class="tag">₹ Cr</span></div>
+        <div class="panel-body" style="padding:0;">
+          <div class="table-scroll" style="max-height:340px;">
+            <table class="ap" id="apTable"></table>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnote">
+        Rebuilt from <b>PhullaVedanta_FlyAsh_Financial_Model_v07.xlsx</b>. Manpower is tied to the same capacity ramp as
+        Revenue and Marketing is a flat monthly base + inflation — both simplified from v07's bespoke schedules (moves
+        15-yr PAT &lt;0.1%). Funding/breakeven are computed on one consistent post-tax cash basis throughout. Working
+        capital is assumed nil. The Freight/Logistics lever has no v07 equivalent — it was added for stress-testing.
+        See <code>docs/METHODOLOGY.md</code> for the full list.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip" hidden></div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
